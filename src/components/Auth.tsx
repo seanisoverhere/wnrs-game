@@ -32,7 +32,7 @@ const Auth = ({ setIsAuthenticated }: AuthProps) => {
       }
       setIsAuthenticated(true);
       setIsLoading(false);
-    }, 3000);
+    }, 2000);
   };
 
   return (
