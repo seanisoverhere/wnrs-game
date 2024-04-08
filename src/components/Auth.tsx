@@ -7,13 +7,29 @@ type AuthProps = {
 
 const Auth = ({ setIsAuthenticated }: AuthProps) => {
   const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currOtp, setCurrOtp] = useState("");
 
   const handleAuth = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setHasError(false);
     setIsLoading(true);
+
+    if (currOtp.length < 4) {
+      setHasError(true);
+      setErrorMessage("It is too short!!");
+      setIsLoading(false);
+      return;
+    }
+
     setTimeout(() => {
+      if (currOtp !== "0403") {
+        setHasError(true);
+        setErrorMessage("It is incorrect :(");
+        setIsLoading(false);
+        return;
+      }
       setIsAuthenticated(true);
       setIsLoading(false);
     }, 3000);
@@ -30,10 +46,15 @@ const Auth = ({ setIsAuthenticated }: AuthProps) => {
       <form onSubmit={(e) => handleAuth(e)}>
         <NumberInput
           autoFocus
-          inputClassName="mx-2 w-14 h-14 space-between text-4xl text-center border border-gray-400 mb-8 rounded-lg"
+          inputClassName={`mx-2 w-14 h-14 space-between text-4xl text-center border ${
+            hasError ? "border-red-400" : "border-gray-400"
+          } rounded-lg`}
           length={4}
-          onChangeOTP={(otp) => console.log(otp)}
+          onChangeOTP={(otp) => setCurrOtp(otp)}
         />
+        {hasError && (
+          <div className="text-red-500 text-sm mx-2 pt-4">{errorMessage}</div>
+        )}
         <button type="submit" className="button" disabled={isLoading}>
           {isLoading ? (
             <div className="flex items-center justify-center space-x-2 animate-pulse">

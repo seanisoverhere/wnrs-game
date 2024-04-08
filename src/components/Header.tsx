@@ -1,15 +1,20 @@
 type HeaderProps = {
-  showTitle?: boolean;
+  isAuthenticated?: boolean;
 };
 
-const Header = ({ showTitle }: HeaderProps) => {
+const Header = ({ isAuthenticated }: HeaderProps) => {
   return (
     <header className="mb-12 sticky top-0 text-sm">
       <div className="flex gap-2 items-center">
-        <img src="/sonny.jpeg" alt="logo" className="rounded-full w-10 h-10" />
-        <div className="font-semibold">Alycia and Sean's WNRS?</div>
+        <img
+          src={`${isAuthenticated ? "/sonny.jpeg" : "sonny-sloth.jpeg"}`}
+          alt="logo"
+          className="rounded-full w-10 h-10"
+        />
+        <div className="font-semibold">
+          Alycia and Sean's WNRS {isAuthenticated ? "!!!!" : "?"}
+        </div>
       </div>
-      {showTitle && <h1>Authenticated</h1>}
     </header>
   );
 };
