@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { IoIosBackspace } from "react-icons/io";
 
 // Components
 import Header from "@/components/Header";
@@ -9,35 +10,58 @@ import Auth from "@/components/Auth";
 import Card from "@/components/Card";
 import ModeCard from "@/components/ModeCard";
 
-const cards = [1];
+// Questions
+import {
+  LEVEL_ONE,
+  LEVEL_TWO,
+  LEVEL_THREE,
+  LEVEL_ONE_DATING,
+  LEVEL_TWO_DATING,
+  LEVEL_THREE_DATING,
+} from "@/utils/questions";
+
+type LevelData = Record<string, string[]>;
+
+type Data = {
+  Normal: LevelData;
+  Dating: LevelData;
+  [key: string]: LevelData;
+};
+
+
+const levels: Data = {
+  Normal: {
+    "1": LEVEL_ONE,
+    "2": LEVEL_TWO,
+    "3": LEVEL_THREE,
+  },
+  Dating: {
+    "1": LEVEL_ONE_DATING,
+    "2": LEVEL_TWO_DATING,
+    "3": LEVEL_THREE_DATING,
+  },
+};
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [mode, setMode] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
-  const [canDrag, setCanDrag] = useState(false);
-  const containerRefs = useRef(new Array());
-
-  // @ts-ignore
-  const handlePanEnd = (_e, info, card) => {
-    if (selectedId) {
-      if (Math.abs(info.offset.x) < 5) {
-        const styles = getComputedStyle(containerRefs.current[card]);
-        // @ts-ignore
-        const timeout = styles.transform.split(",")[4] * -0.6;
-        setCanDrag(false);
-        setTimeout(() => {
-          setSelectedId(null);
-        }, timeout);
-      }
-    } else {
-      setCanDrag(true);
-      setSelectedId(card);
-    }
-  };
+  const [level, setLevel] = useState("");
+  const [index, setIndex] = useState<boolean | number>(false);
 
   const handleOnClick = (selectedMode: string) => {
     setMode(selectedMode);
+  };
+
+  const handleLevelClick = (selectedLevel: string) => {
+    setLevel(selectedLevel);
+  };
+
+  const handleBack = () => {
+    if (level) {
+      setLevel("");
+    } else {
+      setMode("");
+    }
   };
 
   return (
@@ -50,10 +74,10 @@ export default function Home() {
           <div className="my-12">
             {mode ? (
               <div
-                className="font-semibold cursor-pointer"
-                onClick={() => handleOnClick("")}
+                className="font-semibold cursor-pointer flex items-center gap-2 pb-4"
+                onClick={handleBack}
               >
-                {"<"} Back
+                <IoIosBackspace className="w-7 h-7" /> Back
               </div>
             ) : (
               <>
@@ -74,43 +98,79 @@ export default function Home() {
                 </div>
               </>
             )}
-            {mode && (
+            {!level && mode && (
               <div className="relative">
                 <div className="font-semibold text-center py-4 text-2xl">
                   {mode}
                 </div>
-                <div className="layout-cards">
-                  {cards.map((card, i) => (
-                    <motion.div
-                      className={selectedId === card ? "opened-card" : "card"}
-                      key={i}
-                      layout
-                      drag={selectedId === card ? "x" : false}
-                      dragConstraints={{ left: canDrag ? -850 : 0, right: 0 }}
-                      dragElastic={0.2}
-                      onPanEnd={(e, info) => handlePanEnd(e, info, card)}
-                      // @ts-ignore
-                      ref={(el) => (containerRefs.current[card] = el)}
-                    >
-                      {selectedId === card && (
-                        <>
-                          <div />
-                          <div />
-                          <div />
-                        </>
-                      )}
-                    </motion.div>
-                  ))}
-                  <motion.div
-                    className="dim-layer"
-                    animate={{ opacity: selectedId ? 0.3 : 0 }}
+                <div className="flex flex-col gap-12 justify-center items-center">
+                  <Card
+                    cardTitle="Perception"
+                    cardLevel="1"
+                    isTitleCard
+                    handleClick={handleLevelClick}
+                  />
+                  <Card
+                    cardTitle="Connection"
+                    cardLevel="2"
+                    isTitleCard
+                    handleClick={handleLevelClick}
+                  />
+                  <Card
+                    cardTitle="Reflection"
+                    cardLevel="3"
+                    isTitleCard
+                    handleClick={handleLevelClick}
                   />
                 </div>
-                <div className="flex flex-col gap-12 justify-center items-center">
-                  <Card cardTitle="Perception" cardLevel="1" isTitleCard />
-                  <Card cardTitle="Connection" cardLevel="2" isTitleCard />
-                  <Card cardTitle="Reflection" cardLevel="3" isTitleCard />
-                </div>
+              </div>
+            )}
+            {level && (
+              <div className="max-h-[800px] overflow-y-scroll">
+                <h1 className="font-semibold text-center py-4">
+                  Level {level} - {mode}
+                </h1>
+                <ul className="grid grid-cols-3 items-center place-items-center">
+                  {levels[mode][level].map((question, i) => (
+                    <motion.li
+                      className="cursor-pointer rounded-lg my-4 bg-white shadow-lg h-24 w-24"
+                      key={question}
+                      onClick={() => setIndex(i)}
+                      layoutId={question}
+                    >
+                      <span className="text-black text-2xl font-semibold flex justify-center items-center h-full">
+                        {i}
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
+                <AnimatePresence>
+                  {index !== false && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.6 }}
+                      exit={{ opacity: 0 }}
+                      key="overlay"
+                      className=" bg-black fixed top-0 left-0 w-full h-full z-30"
+                      onClick={() => setIndex(false)}
+                    />
+                  )}
+                  {index !== false && (
+                    <div
+                      className="single-image-container z-50"
+                      onClick={() => setIndex(false)}
+                    >
+                      <motion.div
+                        layoutId={levels[mode][level][index as number]}
+                        className="single-image bg-white"
+                      >
+                        <div className="flex justify-center items-center font-semibold text-lg h-full">
+                          {levels[mode][level][index as number]}
+                        </div>
+                      </motion.div>
+                    </div>
+                  )}
+                </AnimatePresence>
               </div>
             )}
           </div>

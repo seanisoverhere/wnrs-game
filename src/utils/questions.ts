@@ -7,7 +7,6 @@ export const LEVEL_ONE = [
   "Do you think plants thrive or die in my care? Explain.",
   "Do I look kind? Explain.",
   "Do I seem like more of a creative or analytical type? Explain.",
-  "Do I seem like someone who would get a name tattooed on myself? Why or why not?",
   "Finish the sentence: Just by looking at you I'd think _____________.",
   "What do my shoes tell you about me?",
   "Do you think I've ever been fired from a job? If so, what for?",
@@ -74,7 +73,7 @@ export const LEVEL_TWO = [
   "What are you passionate about?",
   "What are you not currently giving enough time to?",
   "What about my profile made you swipe right?",
-]
+];
 
 export const LEVEL_THREE = [
   "What about me surprised you?",
@@ -100,4 +99,48 @@ export const LEVEL_THREE = [
   "What can we create together?",
   "What's the most attractive quality about me that isn't physical?",
   "Am I like you expected me to be?",
-]
+];
+
+export const LEVEL_ONE_DATING = [
+  "How many relationships do you think I’ve been in?  How many times do you think I’ve been in love? Explain",
+  "Just by looking at me, what would you think I do for a living?",
+  "What was the first thing you noticed about me when we met in person?",
+  "What do you think my type is? Describe in detail.",
+  "What do you think I was like in high school? Explain.",
+  "Do you think I’m still on good terms with my exes? Why or why not?",
+  "When’s the last time you ghosted someone and why?",
+  "What about me intrigued you besides my physical appearance?",
+  "What do your friends know about me, if anything?",
+];
+
+export const LEVEL_TWO_DATING = [
+  "What are you feeling a lot of lately?",
+  "Do you have any unconventional opinions when it comes to romantic relationships?",
+  "I know I really like someone when ______.",
+  "How has your view on love evolved over time, if at all?",
+  "Describe your worst heartbreak. What did it teach you?",
+  "Who in your life do you feel most yourself around? Why?",
+  "What is something new you've learned about yourself recently?",
+  "How do you define “Dating”?",
+  "Have you ever considered an open relationship? Why or why not?",
+  "What’s the hardest part about dating you?",
+  "What dating advice would you give your younger self?",
+  "What was the worst date you’ve ever been on and why?",
+  "What are you overthinking right now?",
+  "What have you tolerated from others in the past that you no longer have space for?",
+  "How emotionally available do you currently feel? Explain.",
+  "What has being single taught you about yourself?",
+  "What about you has felt repeatedly misunderstood by others, if anything?",
+  "What’s a non-negotiable in your life?",
+  "What did the people who raised you teach you about love? How has that shaped your views on love today?",
+  "Based on what you’ve learned about me, what do you think I’m looking for romantically?",
+  "What mannerisms of mine stood out the most to you? If any?",
+  "If you were to write my dating profile bio, what would it say?",
+];
+
+export const LEVEL_THREE_DATING = [
+  "On a scale of 1-10, how “emotionally available” do I seem? Explain.",
+  "How would you describe our date in one word?",
+  "Which part of my personality isn’t showcased online?",
+  "What do you find most attractive about me that isn’t physical?",
+];

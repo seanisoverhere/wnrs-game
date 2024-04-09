@@ -4,7 +4,7 @@ type HeaderProps = {
 
 const Header = ({ isAuthenticated }: HeaderProps) => {
   return (
-    <header className="mb-2 sticky py-4 bg-amber-50 w-full top-0 text-sm z-10">
+    <header className="mb-2 sticky py-4 bg-amber-50 w-full top-0 text-sm z-20">
       <div className="flex gap-2 items-center">
         <img
           src={`${isAuthenticated ? "/sonny.jpeg" : "sonny-sloth.jpeg"}`}
