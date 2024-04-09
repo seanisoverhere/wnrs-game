@@ -12,7 +12,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
           className="rounded-full w-10 h-10"
         />
         <div className="font-semibold">
-          Alycia and Sean's WNRS {isAuthenticated ? "!!!!" : "?"}
+          Alycia and Sean&apos;s WNRS {isAuthenticated ? "!!!!" : "?"}
         </div>
       </div>
     </header>
