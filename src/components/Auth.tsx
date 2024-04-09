@@ -46,6 +46,7 @@ const Auth = ({ setIsAuthenticated }: AuthProps) => {
       <form onSubmit={(e) => handleAuth(e)}>
         <NumberInput
           autoFocus
+          isNumberInput
           inputClassName={`mx-2 w-14 h-14 space-between text-4xl text-center border ${
             hasError ? "border-red-400" : "border-gray-400"
           } rounded-lg`}
